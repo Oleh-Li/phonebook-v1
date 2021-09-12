@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import ContactForm from "./contactForm/ContactForm";
+import ContactList from "./contactList/ContactList";
+import Filter from "./filter/Filter";
 
 export default class App extends Component {
   state = {
@@ -26,8 +28,17 @@ export default class App extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleFilter = (e) => {
-    this.setState({ filter: e.target.value });
+  onFilterItemsToRepaint = (items, filter) => {
+    if (filter.length === 0) {
+      return items;
+    }
+    return items.filter((item) => {
+      return item.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase());
+    });
+  };
+
+  onFilterChange = (filter) => {
+    this.setState({ filter });
   };
 
   render() {
@@ -39,31 +50,8 @@ export default class App extends Component {
 
         <h2>Contacts</h2>
         <h3>Find contact by name</h3>
-        <input
-          onChange={this.handleFilter}
-          name="filter"
-          autoComplete="off"
-          value={this.state.filter}
-        />
-        <ul>
-          {filter
-            ? contacts
-                .filter((item) =>
-                  item.name
-                    .toLocaleLowerCase()
-                    .includes(filter.toLocaleLowerCase())
-                )
-                .map((item) => (
-                  <li key={item.id}>
-                    {item.name}: {item.number}
-                  </li>
-                ))
-            : contacts.map((item) => (
-                <li key={item.id}>
-                  {item.name}: {item.number}
-                </li>
-              ))}
-        </ul>
+        <Filter handleFilter={this.onFilterChange} />
+        <ContactList contacts={this.onFilterItemsToRepaint(contacts, filter)} />
       </div>
     );
   }
