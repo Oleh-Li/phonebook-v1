@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import styles from "./App.module.css";
 import ContactForm from "./contactForm/ContactForm";
 import ContactList from "./contactList/ContactList";
 import Filter from "./filter/Filter";
@@ -7,10 +7,10 @@ import Filter from "./filter/Filter";
 export default class App extends Component {
   state = {
     contacts: [
-      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
+      { id: "id-1", name: "Logen Ninefingers", number: "459-66-56" },
+      { id: "id-2", name: "Rudd Threetrees", number: "663-89-22" },
+      { id: "id-3", name: "Ardee West", number: "865-47-99" },
+      { id: "id-4", name: "Ferro Maljinn", number: "448-51-62" },
     ],
     filter: "",
   };
@@ -18,6 +18,16 @@ export default class App extends Component {
   onAddItem = (name, number, id) => {
     this.setState(({ contacts }) => {
       const newArr = [...contacts, { name, number, id: id }];
+      return {
+        contacts: newArr,
+      };
+    });
+  };
+
+  onDeleteItem = (id) => {
+    this.setState(({ contacts }) => {
+      const idx = contacts.findIndex((el) => el.id === id);
+      const newArr = [...contacts.slice(0, idx), ...contacts.slice(idx + 1)];
       return {
         contacts: newArr,
       };
@@ -43,15 +53,18 @@ export default class App extends Component {
 
   render() {
     const { filter, contacts } = this.state;
+    const nameArr = contacts.map((item) => item.name);
     return (
-      <div className="App">
-        <h2>Phonebook</h2>
-        <ContactForm onAddItem={this.onAddItem} />
+      <div className={styles.app}>
+        <h2 className={styles.title}>Phonebook</h2>
+        <ContactForm onAddItem={this.onAddItem} nameArr={nameArr} />
 
         <h2>Contacts</h2>
-        <h3>Find contact by name</h3>
         <Filter handleFilter={this.onFilterChange} />
-        <ContactList contacts={this.onFilterItemsToRepaint(contacts, filter)} />
+        <ContactList
+          contacts={this.onFilterItemsToRepaint(contacts, filter)}
+          onDeleteItem={this.onDeleteItem}
+        />
       </div>
     );
   }

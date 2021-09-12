@@ -1,10 +1,12 @@
 import ContactListItem from "./contactListItem/ContactListItem";
+import styles from "./ContactList.module.css"
 
-const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts, onDeleteItem }) => {
   const elements = contacts.map((item) => {
     const { id, ...itemProps } = item;
     return <li key={id}>
-        <ContactListItem {...itemProps}/>
+        <ContactListItem {...itemProps}
+        onDeleteItem={()=>onDeleteItem(id)}/>
     </li>;
   });
   return (

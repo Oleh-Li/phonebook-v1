@@ -1,5 +1,6 @@
 import { Component } from "react";
 import shortid from "shortid";
+import styles from "./ContactForm.module.css";
 
 export default class ContactForm extends Component {
   state = {
@@ -15,6 +16,11 @@ export default class ContactForm extends Component {
     e.preventDefault();
     const { name, number } = this.state;
     const { onAddItem } = this.props;
+    if (this.props.nameArr.indexOf(name) > -1) {
+      alert(`${name} is already in contact`);
+      this.setState({ name: "", number: "" });
+      return;
+    }
     onAddItem(name, number, shortid.generate());
     this.setState({ name: "", number: "" });
   };
@@ -22,10 +28,11 @@ export default class ContactForm extends Component {
   render() {
     const { name, number } = this.state;
     return (
-      <form onSubmit={this.onSubmit}>
+      <form className={styles.contactForm} onSubmit={this.onSubmit}>
         <h3>Name</h3>
 
         <input
+          className={styles.nameInput}
           onChange={this.onInputChange}
           type="text"
           name="name"
@@ -37,6 +44,7 @@ export default class ContactForm extends Component {
         />
         <h3>Number</h3>
         <input
+          className={styles.numberInput}
           onChange={this.onInputChange}
           type="tel"
           name="number"

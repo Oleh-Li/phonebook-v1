@@ -1,0 +1,11 @@
+.contactForm{
+    border-width: 2px;
+    border-color: grey;
+    border-style: solid;
+    background-color: #red;
+    padding: 6px;
+}
+
+.numberInput{
+margin-bottom: 8px;
+}

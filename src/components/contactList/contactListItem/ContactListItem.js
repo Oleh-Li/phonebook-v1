@@ -1,7 +1,9 @@
+import styles from "./ContactListItem.module.css"
 const ContactListItem = (props) => {
   return (
     <>
-      {props.name}: {props.number} <button>Delete</button>
+      <span className={styles.itemContactSpan}>{props.name}: {props.number}{" "}</span>
+      <button className={styles.contactBuuton} onClick={props.onDeleteItem}>Delete</button>
     </>
   );
 };
