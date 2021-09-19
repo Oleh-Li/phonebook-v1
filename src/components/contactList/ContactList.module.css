@@ -1,5 +1,9 @@
-li{
-    font-size: 18px;
-    margin-bottom: 6px;
-    
+li {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.contacstList {
+  display: flex;
+  flex-direction: column;
 }

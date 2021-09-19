@@ -10,7 +10,7 @@ const ContactList = ({ contacts, onDeleteItem }) => {
     </li>;
   });
   return (
-    <ul>
+    <ul className={styles.contacstList}>
       {elements}
     </ul>
   );
