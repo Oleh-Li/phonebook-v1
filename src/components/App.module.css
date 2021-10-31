@@ -3,3 +3,9 @@
     max-width: 800px;
     margin: 0, auto;
 }
+
+.title{
+    font-size: 40px;
+    transform: translateX(-130px, 140px) ;
+    transition: 2s;
+}

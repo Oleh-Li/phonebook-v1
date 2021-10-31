@@ -1,19 +1,28 @@
 import React, { Component } from "react";
+import { CSSTransition } from "react-transition-group";
 import styles from "./App.module.css";
 import ContactForm from "./contactForm/ContactForm";
 import ContactList from "./contactList/ContactList";
 import Filter from "./filter/Filter";
+import  popTransition  from "./transitions/pop.module.css";
 
 export default class App extends Component {
   state = {
     contacts: [
-      { id: "id-1", name: "Logen Ninefingers", number: "459-66-56" },
-      { id: "id-2", name: "Rudd Threetrees", number: "663-89-22" },
-      { id: "id-3", name: "Ardee West", number: "865-47-99" },
-      { id: "id-4", name: "Ferro Maljinn", number: "448-51-62" },
+      // { id: "id-1", name: "Logen Ninefingers", number: "459-66-56" },
+      // { id: "id-2", name: "Rudd Threetrees", number: "663-89-22" },
+      // { id: "id-3", name: "Ardee West", number: "865-47-99" },
+      // { id: "id-4", name: "Ferro Maljinn", number: "448-51-62" },
     ],
     filter: "",
   };
+
+  componentDidMount() {
+    const savedCotacts = localStorage.getItem("contacts");
+    if (savedCotacts) {
+      this.setState({ contacts: JSON.parse(savedCotacts) });
+    }
+  }
 
   onAddItem = (name, number, id) => {
     this.setState(({ contacts }) => {
@@ -51,13 +60,6 @@ export default class App extends Component {
     this.setState({ filter });
   };
 
-  componentDidMount() {
-    const savedCotacts = localStorage.getItem("contacts")
-    if(savedCotacts){
-      this.setState({contacts: JSON.parse(savedCotacts)})
-    }
-  }
-  
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts !== this.state.contacts) {
@@ -65,13 +67,14 @@ export default class App extends Component {
     }
   }
 
-
   render() {
     const { filter, contacts } = this.state;
     const nameArr = contacts.map((item) => item.name);
     return (
       <div className={styles.app}>
-        <h2 className={styles.title}>Phonebook</h2>
+        <CSSTransition in={true} classNames={popTransition} timeout={200}>
+          <h2 className={styles.title}>Phonebook</h2>
+        </CSSTransition>
         <ContactForm onAddItem={this.onAddItem} nameArr={nameArr} />
 
         <h2>Contacts</h2>
