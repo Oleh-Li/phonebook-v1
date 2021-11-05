@@ -7,8 +7,8 @@ const ContactList = ({ contacts, onDeleteItem }) => {
   const elements = contacts.map((item) => {
     const { id, ...itemProps } = item;
     return (
-      <CSSTransition classNames={slideTransition} timeout={200}>
-        <li key={id}>
+      <CSSTransition key={id} classNames={slideTransition} timeout={200}>
+        <li >
           <ContactListItem
             {...itemProps}
             onDeleteItem={() => onDeleteItem(id)}
