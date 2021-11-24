@@ -1,36 +1,37 @@
+import { combineReducers } from "redux";
 import { Type } from "./timerActions";
 
-const initialState = {
-  value: 0,
-  step: {
-    value: 5,
-    label: "5",
-  },
-};
-
-const timerReducer = (state = initialState, action) => {
-  switch (action.type) {
+const valueReducer = (state = 0, { type, payload }) => {
+  // option argument = type andpauload
+  switch (type) {
     case Type.INCREMENT:
-      return {
-        ...state,
-        value: state.value + action.payload,
-      };
+      return state + parseInt(payload);
 
     case Type.DECREMENT:
-      return {
-        ...state,
-        value: state.value - action.payload,
-      };
-
-    case Type.CHANGE_STEP:
-      return {
-        ...state,
-        step: action.payload,
-      };
+      return state - payload;
 
     default:
       return state;
   }
 };
 
-export default timerReducer;
+const stepReducer = (
+  state = {
+    value: 5,
+    label: "5",
+  },
+  { type, payload }
+) => {
+  switch (type) {
+    case Type.CHANGE_STEP:
+      return payload;
+
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({
+  value: valueReducer,
+  step: stepReducer,
+});

@@ -4,7 +4,7 @@ import styles from "./App.module.css";
 import ContactForm from "./contactForm/ContactForm";
 import ContactList from "./contactList/ContactList";
 import Filter from "./filter/Filter";
-import  popTransition  from "./transitions/pop.module.css";
+import popTransition from "./transitions/pop.module.css";
 import Timer from "./timer/TimerContainer";
 
 // import store from '../redux/store'
@@ -12,12 +12,7 @@ import StepSelector from "./stepSelector/StepSelector";
 
 export default class App extends Component {
   state = {
-    contacts: [
-      // { id: "id-1", name: "Logen Ninefingers", number: "459-66-56" },
-      // { id: "id-2", name: "Rudd Threetrees", number: "663-89-22" },
-      // { id: "id-3", name: "Ardee West", number: "865-47-99" },
-      // { id: "id-4", name: "Ferro Maljinn", number: "448-51-62" },
-    ],
+    contacts: [],
     filter: "",
   };
 
@@ -64,7 +59,6 @@ export default class App extends Component {
     this.setState({ filter });
   };
 
-
   componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts !== this.state.contacts) {
       localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
@@ -72,13 +66,12 @@ export default class App extends Component {
   }
 
   render() {
-    // console.log("STORE" ,store)
     const { filter, contacts } = this.state;
     const nameArr = contacts.map((item) => item.name);
     return (
       <div className={styles.app}>
-        <Timer/>
-        <StepSelector/>
+        <Timer />
+        <StepSelector />
         <CSSTransition in={true} classNames={popTransition} timeout={200}>
           <h2 className={styles.title}>Phonebook</h2>
         </CSSTransition>
