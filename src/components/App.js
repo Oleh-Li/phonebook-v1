@@ -5,10 +5,6 @@ import ContactForm from "./contactForm/ContactForm";
 import ContactList from "./contactList/ContactList";
 import Filter from "./filter/Filter";
 import popTransition from "./transitions/pop.module.css";
-import Timer from "./timer/TimerContainer";
-
-// import store from '../redux/store'
-import StepSelector from "./stepSelector/StepSelector";
 
 export default class App extends Component {
   state = {
@@ -70,8 +66,7 @@ export default class App extends Component {
     const nameArr = contacts.map((item) => item.name);
     return (
       <div className={styles.app}>
-        <Timer />
-        <StepSelector />
+ 
         <CSSTransition in={true} classNames={popTransition} timeout={200}>
           <h2 className={styles.title}>Phonebook</h2>
         </CSSTransition>
